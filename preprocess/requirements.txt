@@ -1,0 +1,4 @@
+mecab-python3
+unidic
+numpy==1.19.5
+transformers==4.3.2
