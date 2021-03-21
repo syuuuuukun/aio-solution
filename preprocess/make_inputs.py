@@ -588,9 +588,9 @@ def get_inputs(mode="train"):
     json_file = f"{mode}_questions.json"
     
     json_data = read_json(root_path+json_file)
-    ctx1 = pickle.load(open(root_path+f"{mode}_ctx_ids-top10_in-answers.pkl","rb"))
+    ctx1 = pickle.load(open(root_path+f"{mode}_ctx_ids-top10.pkl","rb"))
     ctx2 = pickle.load(open(root_path+f"{mode}_ctx_ids-top10_ignore-answers.pkl","rb"))
-    ctx3 = pickle.load(open(root_path+f"{mode}_ctx_ids-top10_add-answers.pkl","rb"))
+    ctx3 = pickle.load(open(root_path+f"{mode}_ctx_ids-top10_query-add-answers.pkl","rb"))
     
     
     for data,c1,c2,c3 in zip(json_data,ctx1,ctx2,ctx3):
