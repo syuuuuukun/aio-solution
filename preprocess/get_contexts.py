@@ -249,15 +249,15 @@ if __name__ == "__main__":
         pickle.dump(dev2_results1, f)
         
     with open('../data/train_ctx_ids-top10.pkl', 'wb') as f:
-        pickle.dump(train_results1, f)
+        pickle.dump(train_results2, f)
     with open('../data/dev1_ctx_ids-top10.pkl', 'wb') as f:
-        pickle.dump(dev1_results1, f)
+        pickle.dump(dev1_results2, f)
     with open('../data/dev2_ctx_ids-top10.pkl', 'wb') as f:
-        pickle.dump(dev2_results1, f)
+        pickle.dump(dev2_results2, f)
         
     with open('../data/train_ctx_ids-top10_query-add-answers.pkl', 'wb') as f:
-        pickle.dump(train_results1, f)
+        pickle.dump(train_results3, f)
     with open('../data/dev1_ctx_ids-top10_query-add-answers.pkl', 'wb') as f:
-        pickle.dump(dev1_results1, f)
+        pickle.dump(dev1_results3, f)
     with open('../data/dev2_ctx_ids-top10_query-add-answers.pkl', 'wb') as f:
-        pickle.dump(dev2_results1, f)
+        pickle.dump(dev2_results3, f)
