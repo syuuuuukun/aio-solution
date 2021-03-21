@@ -1,8 +1,12 @@
 # AI王 〜クイズAI日本一決定戦〜 解法
 ## 事前に用意するもの
-[apex](https://github.com/NVIDIA/apex)\
-[推論時必要な学習済みパラメータ](https://drive.google.com/drive/folders/185aD55z77MP-1IwApDqt7ULfrYiRuNdA?usp=sharing)\
+- cuDNN: 7.6.5
+- cuda: 10.1
+- [apex](https://github.com/NVIDIA/apex)
+- [推論時必要な学習済みパラメータ](https://drive.google.com/drive/folders/185aD55z77MP-1IwApDqt7ULfrYiRuNdA?usp=sharing)\
 ./paramsの配下に学習済みパラメータを配置してください
+
+- ./dataの配下にaio_leaderboard.json
 
 
 ## データの前処理
