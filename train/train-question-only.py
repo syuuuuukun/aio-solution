@@ -2,13 +2,14 @@ import glob
 import logging
 import os
 import random
+import argparse
 from tqdm import tqdm
 
 import numpy as np
 
 import torch
 from torchvision.transforms import transforms
-from torch.utils.data import Dataset,DataLoader,DistributedSampler,TensorDataset
+from torch.utils.data import Dataset,DataLoader,DistributedSampler,TensorDataset,RandomSampler
 from torch import nn
 from torch import distributed as dist
 import torch.nn.functional as F
@@ -69,6 +70,7 @@ if __name__ == "__main__":
     warmup_step = 0
     seq_len = 768
     drop_rate = 0.1
+    gradient_accumurate = 8
     model_arch = "bert-base-v2"
     
     
@@ -88,9 +90,9 @@ if __name__ == "__main__":
         torch.distributed.init_process_group(backend="nccl", init_method="env://")
         synchronize()
         
-    train_all = torch.load("./data/basev2-train_features-seq768-question_only-search_ver3.pt")
-    dev1_all = torch.load("./data/basev2-dev1_features-seq768-question_only-search_ver3.pt")
-    dev2_all = torch.load("./data/basev2-dev2_features-seq768-question_only-search_ver3.pt")        
+    train_all = torch.load("../data/basev2-train_features-seq768-question_only-search_ver3.pt")
+    dev1_all = torch.load("../data/basev2-dev1_features-seq768-question_only-search_ver3.pt")
+    dev2_all = torch.load("../data/basev2-dev2_features-seq768-question_only-search_ver3.pt")        
     
     train_input_ids,train_input_mask,train_segment_ids,train_label_ids = train_all["train_input_ids"],train_all["train_input_mask"],train_all["train_segment_ids"],train_all["train_label_ids"]
     dev1_input_ids,dev1_input_mask,dev1_segment_ids,dev1_label_ids = dev1_all["dev1_input_ids"],dev1_all["dev1_input_mask"],dev1_all["dev1_segment_ids"],dev1_all["dev1_label_ids"]
@@ -125,10 +127,10 @@ if __name__ == "__main__":
     train_dataloader = DataLoader(train_datasets, sampler=train_sampler, batch_size=batch_size,drop_last=True)
 
     dev1_datasets = TensorDataset(dev1_input_ids,dev1_input_mask,dev1_segment_ids,dev1_label_ids)
-    dev1_dataloader = DataLoader(dev1_datasets, sampler=dev1_sampler, batch_size=batch_size,drop_last=True)
+    dev1_dataloader = DataLoader(dev1_datasets, batch_size=batch_size)
 
     dev2_datasets = TensorDataset(dev2_input_ids,dev2_input_mask,dev2_segment_ids,dev2_label_ids)
-    dev2_dataloader = DataLoader(dev2_datasets, sampler=dev2_sampler, batch_size=batch_size,drop_last=True)
+    dev2_dataloader = DataLoader(dev2_datasets, batch_size=batch_size)
     
 
     one_iters = len(train_dataloader)
